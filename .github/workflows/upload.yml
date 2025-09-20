@@ -1,0 +1,26 @@
+name: ci/cd
+on: 
+  push:
+  workflow_dispatch:
+jobs:
+  cicdjob:
+     runs-on: ubuntu-latest
+     steps:
+        - name: checkout
+          uses: actions/checkout@v5
+        - name: install java with maven
+          uses: actions/setup-java@v5
+          with:
+            distribution: 'temurin'
+            java-version: '21'
+            cache: 'maven'
+        - name: build the code
+          run: mvn package
+        - name: build the code
+          run: mvn test
+        - name: upload the artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: balu.war
+            path: /home/runner/work/MavenBuild-SL/MavenBuild-SL/target/java-example.war
+     
